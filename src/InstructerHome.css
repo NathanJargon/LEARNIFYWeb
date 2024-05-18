@@ -1,0 +1,110 @@
+.home-container {
+  position: relative;
+  padding-top: 10px; 
+}
+
+.header-box {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  border: none;
+  padding: 5px;
+  box-sizing: border-box;
+  background-color: #fff; 
+  z-index: 100;
+  box-shadow: 0 2px 150px rgba(0, 0, 0, 0.4); 
+}
+
+.logo-title {
+  display: flex;
+  align-items: center;
+}
+
+.logo-title .logo {
+  width: 70px;
+  height: 50px;
+  margin-right: 10px;
+}
+
+.search-profile {
+  display: flex;
+  align-items: center;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  border: 1px solid #000;
+  border-radius: 20px;
+  padding: 10px 50px;
+  margin-right: 25px;
+}
+
+.search-box input {
+  border: none;
+  margin-right: 10px;
+}
+
+.search-box input {
+  border: none;
+  margin-right: 10px;
+  outline: none;
+}
+
+.profile-icon {
+  width: 40px;
+  height: 30px;
+}
+
+.big-text {
+  text-align: center;
+  font-size: 2em; 
+  padding: 150px;
+}
+
+.courses-title {
+  padding-left: 50px;
+  font-size: 2em; 
+}
+
+.bell-icon {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+}
+
+.search-profile-below {
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  padding: 5px; 
+}
+
+.profile-icon-below {
+  width: 40px;
+  height: 30px;
+  margin-left: auto; /* This will push the profile icon to the right */
+}
+
+.search-box-below {
+  display: flex;
+  align-items: center;
+  width: 80%; 
+  height: 50px; 
+  border-radius: 25px;
+  box-shadow: 0 2px 100px rgba(0, 0, 0, 0.3); 
+  margin: 0 auto; 
+  padding: 10px 20px;
+}
+
+.search-box-below input {
+  border: none;
+  margin-right: 10px;
+  outline: none;
+  width: 100%; 
+}

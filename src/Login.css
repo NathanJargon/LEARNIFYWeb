@@ -1,0 +1,159 @@
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-box {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    border: none;
+    padding: 2em;
+    border-radius: 1em;
+}
+
+.login-box form {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.login-box form label {
+    align-self: flex-start;
+}
+
+.login-box form input {
+    padding: 1em;
+    border-radius: 0.5em;
+    border: 0.15px solid grey;
+}
+
+.login-box form button {
+    padding: 1.25em;
+    border-radius: 0.5em;
+    background-color: blue;
+    color: white;
+    border: none;
+    font-weight: bold; 
+}
+
+.forgot-password {
+    align-self: flex-end;
+    margin-top: 1em;
+}
+
+.password-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-container input {
+    flex-grow: 1;
+    padding-right: 2em; 
+}
+
+.password-container i {
+    position: absolute;
+    right: 1em;
+    cursor: pointer;
+}
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-box {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    border: none;
+    padding: 2em;
+    border-radius: 1em;
+}
+
+.login-box form {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.login-box form label {
+    align-self: flex-start;
+}
+
+.login-box form input {
+    padding: 1em;
+    border-radius: 0.5em;
+    border: 0.15px solid grey;
+}
+
+.login-box form button {
+    padding: 1.25em;
+    border-radius: 0.5em;
+    background-color: blue;
+    color: white;
+    border: none;
+    font-weight: bold; 
+}
+
+.forgot-password {
+    align-self: flex-end;
+    margin-top: 1em;
+}
+
+.password-container, .email-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-container input, .email-container input {
+    flex-grow: 1;
+    padding-right: 2em; 
+}
+
+.password-container i, .email-container i {
+    position: absolute;
+    right: 1em;
+    cursor: pointer;
+}
+
+.login-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    position: relative;
+  }
+
+.sprinkles {
+    position: relative;
+    top: -10px; 
+    width: 50px; 
+    height: auto; 
+  }
+
+  button[type="submit"] {
+    cursor: pointer;
+  }
+
+.instructor-login {
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.instructor-login hr {
+    flex-grow: 1;
+}
+
+.instructor-login p {
+    cursor: pointer;
+    margin: 0 10px;
+}

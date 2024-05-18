@@ -1,24 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
+import Login from './Login';
+import Dashboard from './Dashboard';
+import Register from './Register';
+import UserHome from './UserHome';
+import InstructerHome from './InstructerHome';
+import CreateCourse from './CreateCourse';
+
+function RedirectToLogin() {
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    navigate('/login');
+  }, [navigate]);
+
+  return null;
+}
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<RedirectToLogin />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/home" element={<UserHome />} />
+        <Route path="/instructor" element={<InstructerHome />} />
+        <Route path="/createcourse" element={<CreateCourse />} />
+      </Routes>
+    </Router>
   );
 }
 

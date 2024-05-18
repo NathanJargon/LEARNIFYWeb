@@ -1,0 +1,116 @@
+.course-container {
+    position: relative;
+    padding-top: 155px; 
+    padding-left: 50px;
+}
+
+.header-box {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    border: none;
+    padding: 5px;
+    box-sizing: border-box;
+    background-color: #fff; 
+    z-index: 100;
+    box-shadow: 0 2px 150px rgba(0, 0, 0, 0.4); 
+}
+
+.logo-title {
+    display: flex;
+    align-items: center;
+}
+
+.logo-title .logo {
+    width: 70px;
+    height: 50px;
+    margin-right: 10px;
+}
+
+.courses-title {
+    padding-left: 100px;
+    font-size: 2em; 
+}
+
+.course-form {
+  max-width: 600px;
+  padding: 20px;
+  margin-left: 350px;
+}
+
+.course-form label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.course-form input[type="text"],
+.course-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.course-form input[type="submit"] {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.course-form input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.dropzone {
+    width: 100%;
+    height: 200px;
+    border: 2px dashed #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.dropzone div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.course-button-container {
+    display: flex;
+    justify-content: flex-end; /* Align the buttons to the right */
+    gap: 10px;
+    padding-bottom: 20px;
+}
+
+.course-cancel-button {
+    padding: 10px 100px;
+    background-color: white;
+    color: black;
+    border: 1px solid black; /* Add a solid black border */
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.course-cancel-button:hover {
+    background-color: #f2f2f2;
+}
+
+.course-form input[type="submit"] {
+    display: block;
+    padding: 10px 110px;
+    margin-left: 60px; /* Push the submit button to the right */
+    /* ... rest of your CSS code */
+}
