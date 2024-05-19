@@ -1,0 +1,197 @@
+.content-container {
+  position: relative;
+  padding-top: 200px; 
+}
+
+.content-profile-icon {
+  margin-right: 10px;
+  border-radius: 50%;
+  overflow: 'hidden';
+  width: 70px;
+  height: 50px;
+}
+
+.content-search-profile span {
+  vertical-align: middle; /* align the email vertically with the profile picture */
+}
+
+.content-profile-info {
+  margin-left: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.content-learningcontainer {
+  position: relative;
+}
+
+.content-info {
+  margin-top: 20px;
+  margin-left: 15em;
+}
+
+.content-title {
+  margin-bottom: 10px;
+}
+
+.content-learningtitle {
+  margin-left: 2em;
+  margin-top: 6em;
+  font-size: 30px;
+}
+
+.content-activitytitle {
+  margin-left: 2em;
+  margin-top: 4em;
+  font-size: 30px;
+}
+
+.content-description {
+  margin-top: 0;
+}
+
+.content-objectives {
+  margin-top: 7em;
+  margin-left: 5em;
+}
+
+.content-topics {
+  margin-top: 7em;
+  margin-left: 5em;
+}
+
+.content-card {
+  width: 80%; 
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+  background-size: cover;
+  background-position: center;
+}
+
+.content-course-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.content-course-card {
+  flex: 0 0 calc(33.3333% - 20px);
+  margin-bottom: 20px;
+}
+
+.content-card:hover {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.content-card-body {
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.8); /* semi-transparent white */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.content-card-title {
+  margin-bottom: 15px;
+  font-size: 15px;
+  text-align: center;
+}
+
+.content-card-body img {
+  width: 100%; /* adjust this value as needed */
+  height: auto;
+}
+
+.content-btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+  color: #fff;
+  padding: 5px 10px; /* increase padding */
+  border-radius: 25px; /* add border radius */
+  font-size: 16px; /* increase font size */
+}
+
+.content-btn-primary:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+
+.content-card-body h2 {
+  max-width: 90%; /* limit the width to 90% of the card body */
+  overflow: hidden; /* hide the overflow */
+  text-overflow: ellipsis; /* add an ellipsis when the text overflows */
+  white-space: nowrap; /* prevent the text from wrapping to the next line */
+  font-size: 14px; /* reduce the font size */
+}
+
+.add-activity {
+  font-size: 12px;
+  color: blue;
+  cursor: pointer;
+}
+
+.content-forumtitle {
+  margin-left: 2em;
+  margin-top: 6em;
+  font-size: 30px;
+}
+
+.content-forumform {
+  display: flex; /* add this */
+  justify-content: space-between; /* add this */
+  align-items: flex-start; /* add this */
+}
+
+.content-forumform textarea {
+  flex-grow: 1; /* add this */
+  margin-right: 10px;
+  width: 50%;
+  min-height: 50px;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  resize: vertical;
+  font-size: 1.1em;
+}
+
+.content-forumform textarea:focus {
+  border-color: #007BFF;
+  box-shadow: 0 0 5px rgba(0,123,255,.5);
+}
+
+.content-forumform button {
+  flex-shrink: 0; 
+  width: 50%;
+  padding: 10px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.content-forumform button:hover {
+  background-color: #0056b3;
+}
+
+.content-comment {
+  margin-bottom: 10px;
+  width: 50%; /* specify the width */
+  height: 10%; /* specify the height */
+  padding: 15px;
+  padding-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #f8f9fa;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  font-size: 0.75em;
+  line-height: 1;
+  color: #333;
+}

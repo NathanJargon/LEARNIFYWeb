@@ -12,54 +12,67 @@ function Home() {
   const [courseDescription, setCourseDescription] = useState('');
   const [courseObjectives, setCourseObjectives] = useState('');
   const [courseTopics, setCourseTopics] = useState('');
-  const [courseImage, setCourseImage] = useState(null); // add this line
+  const [courseImage, setCourseImage] = useState(null); 
+  const [learningMaterials, setLearningMaterials] = useState([]);
+
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+  
     const user = firebase.auth().currentUser;
     const db = firebase.firestore();
-
+  
     const docId = `${courseName}-${user.uid}`; 
-
+  
     // upload the course image to Firebase Storage
     const storageRef = firebase.storage().ref();
     const fileRef = storageRef.child(courseImage.name);
     await fileRef.put(courseImage);
     const fileUrl = await fileRef.getDownloadURL();
-
+  
+    // upload the learning materials to Firebase Storage
+    const learningMaterialUrls = await Promise.all(learningMaterials.map(async (file) => {
+      const fileRef = storageRef.child(file.name);
+      await fileRef.put(file);
+      return fileRef.getDownloadURL();
+    }));
+  
     await db.collection('courses').doc(docId).set({
       courseName,
       courseDescription,
       courseObjectives,
       courseTopics,
       courseImage: fileUrl, 
+      learningMaterials: learningMaterialUrls,
       userEmail: user.email,
       userId: user.uid,
     });
-
+  
     navigate('/instructor');
   };
 
   const handleImageChange = (e) => {
-    setCourseImage(e.target.files[0]);
+    if (e.target.files[0]) {
+      const fileType = e.target.files[0]["type"];
+      const validImageTypes = ["image/jpeg", "image/png"];
+      if (validImageTypes.includes(fileType)) {
+        setCourseImage(e.target.files[0]);
+      } else {
+        alert("Invalid file type. Please select a PNG or JPG file.");
+      }
+    }
   };
 
-  const [numFiles, setNumFiles] = useState(0); // add this line
+  const [numFiles, setNumFiles] = useState(0);
 
-  const onDrop = useCallback((acceptedFiles, fileRejections) => {
-    // Do something with the files
-    if (fileRejections.length > 0) {
-      alert('Only PDF files are accepted.');
-    } else {
-      setNumFiles(prevNumFiles => prevNumFiles + acceptedFiles.length); // add this line
-    }
+  const onDrop = useCallback((acceptedFiles) => {
+    setNumFiles(prevNumFiles => prevNumFiles + acceptedFiles.length);
   }, []);
-
+  
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ 
     onDrop,
-    accept: 'application/pdf' // only accept PDF files
+    accept: 'application/pdf'
   });
 
   return (
@@ -94,7 +107,7 @@ function Home() {
         </label>
         <label>
           Course Image:
-          <input type="file" onChange={handleImageChange} />
+          <input type="file" accept=".png, .jpg, .jpeg" onChange={handleImageChange} />
         </label>
 
         <div className="upload-title">
@@ -107,8 +120,8 @@ function Home() {
             isDragActive ?
             <p>Drop the files here ...</p> :
             <div>
-              <p>Drag 'n' drop some files here,</p>
-              <p>or browse</p>
+              <p>Drag 'n' drop some learning materials here,</p>
+              <p>or browse learning materials</p>
               <p>{numFiles} file(s) uploaded</p>
             </div>
           }

@@ -20,12 +20,13 @@
   box-shadow: 0 2px 150px rgba(0, 0, 0, 0.4); 
 }
 
-.logo-title {
+.instructor-logo-title {
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 
-.logo-title .logo {
+.instructor-logo-title .logo {
   width: 70px;
   height: 50px;
   margin-right: 10px;
@@ -143,6 +144,7 @@
 
 .card-title {
   margin-bottom: 15px;
+  text-align: center;
 }
 
 .btn-primary {
@@ -179,4 +181,15 @@
   background-color: #007bff !important;
   width: 50%;
   border-radius: 10px; /* add border radius */
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  z-index: 1;
 }

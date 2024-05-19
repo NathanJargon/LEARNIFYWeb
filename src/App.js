@@ -7,6 +7,8 @@ import UserHome from './UserHome';
 import InstructerHome from './InstructerHome';
 import CreateCourse from './CreateCourse';
 import Course from './Course';
+import CreateActivity from './CreateActivity';
+import UserCourse from './UserCourse';
 
 function RedirectToLogin() {
   const navigate = useNavigate();
@@ -30,6 +32,8 @@ function App() {
         <Route path="/instructor" element={<InstructerHome />} />
         <Route path="/createcourse" element={<CreateCourse />} />
         <Route path="/course/:courseId" element={<Course />} />
+        <Route path="/createactivity/:courseId" element={<CreateActivity />} />
+        <Route path="/usercourse/:courseId" element={<UserCourse />} />
       </Routes>
     </Router>
   );

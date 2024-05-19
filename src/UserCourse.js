@@ -59,7 +59,7 @@ function CourseContent() {
   return (
     <div className="content-container">
       <div className="header-box">
-          <div className="logo-title" onClick={() => navigate('/instructor')}>
+          <div className="logo-title" onClick={() => navigate('/home')}>
             <img src={logo} alt="Logo" className="logo" />
             <h1>Learnify</h1>
           </div>
@@ -114,7 +114,7 @@ function CourseContent() {
       )}
         
       <div className="content-activitytitle">
-        <h3>Activities <span className="add-activity" onClick={() => navigate(`/createactivity/${courseId}`)}>Add Activity</span></h3>
+      <h3>Activities</h3>
         <div className="content-activitycontainer">
         <div className="content-course-grid">
           {activities.map((activity, index) => (

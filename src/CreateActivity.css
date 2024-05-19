@@ -1,0 +1,218 @@
+.course-container {
+  position: relative;
+  padding-top: 155px; 
+  padding-left: 50px;
+}
+
+.header-box {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  border: none;
+  padding: 5px;
+  box-sizing: border-box;
+  background-color: #fff; 
+  z-index: 100;
+  box-shadow: 0 2px 150px rgba(0, 0, 0, 0.4); 
+}
+
+.logo-title {
+  display: flex;
+  align-items: center;
+}
+
+.logo-title .logo {
+  width: 70px;
+  height: 50px;
+  margin-right: 10px;
+}
+
+
+.create-activity-container {
+  position: relative;
+  padding-top: 155px; 
+  padding-left: 50px;
+}
+
+.create-activity-header-box {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  border: none;
+  padding: 5px;
+  box-sizing: border-box;
+  background-color: #fff; 
+  z-index: 100;
+  box-shadow: 0 2px 150px rgba(0, 0, 0, 0.4); 
+}
+
+.create-activity-logo-title {
+  display: flex;
+  align-items: center;
+}
+
+.create-activity-logo-title .logo {
+  width: 70px;
+  height: 50px;
+  margin-right: 10px;
+}
+
+.create-activity-courses-title {
+  padding-left: 100px;
+  font-size: 2em; 
+}
+
+.create-activity-form {
+  max-width: 600px;
+  padding: 20px;
+  margin-left: 350px;
+}
+
+.create-activity-form label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.create-activity-form input[type="text"],
+.create-activity-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.create-activity-form input[type="submit"] {
+  padding: 10px 20px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.create-activity-form input[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+.create-activity-dropzone {
+  width: 100%;
+  height: 200px;
+  border: 2px dashed #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.create-activity-dropzone div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.create-activity-button-container {
+  display: flex;
+  justify-content: flex-end; /* Align the buttons to the right */
+  gap: 10px;
+  padding-bottom: 20px;
+}
+
+.create-activity-cancel-button {
+  padding: 10px 100px;
+  background-color: white;
+  color: black;
+  border: 1px solid black; /* Add a solid black border */
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.create-activity-cancel-button:hover {
+  background-color: #f2f2f2;
+}
+
+.create-activity-form input[type="submit"] {
+  display: block;
+  padding: 10px 110px;
+  margin-left: 60px; /* Push the submit button to the right */
+  /* ... rest of your CSS code */
+}
+
+.create-activity-form input[type="file"] {
+  display: block;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 20px;
+  background: #f8f8f8;
+  cursor: pointer;
+}
+
+.create-activity-form input[type="file"]:hover {
+  background: #e8e8e8;
+}
+
+.create-activity-form button {
+  padding: 10px 20px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.create-activity-form button:hover {
+  background-color: #0056b3;
+}
+
+.create-activity-form button,
+.create-activity-form input[type="submit"] {
+  padding: 10px 20px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 10px;
+  display: inline-block; /* Add this line */
+  margin-top: 10px; /* Add this line */
+}
+
+.create-activity-form button:hover,
+.create-activity-form input[type="submit"]:hover {
+  background-color: #0056b3;
+}.create-activity-form button,
+.create-activity-form input[type="submit"] {
+  padding: 10px 20px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 10px;
+  display: inline-block; /* Add this line */
+  margin-top: 10px; /* Add this line */
+}
+
+.create-activity-form button:hover,
+.create-activity-form input[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+.create-activity-button-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
