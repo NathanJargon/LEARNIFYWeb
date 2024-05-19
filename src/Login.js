@@ -3,8 +3,8 @@ import './Login.css';
 import logo from './images/logo.png'; 
 import sprinkles from './images/sprinkles.png'; 
 import { FaEye, FaEyeSlash, FaCheck, FaTimes } from 'react-icons/fa';
-import { firebase } from './FirebaseConfig'; // import firebase
-import { useNavigate } from 'react-router-dom'; // import useNavigate
+import { firebase } from './FirebaseConfig';
+import { useNavigate } from 'react-router-dom'; 
 
 function Login() {
   const [showPassword, setShowPassword] = useState(false);
@@ -23,10 +23,10 @@ function Login() {
   };
 
   const handlePasswordChange = (event) => {
-    setPassword(event.target.value); // update password state
+    setPassword(event.target.value); 
   };
 
-  const navigate = useNavigate(); // create navigate function
+  const navigate = useNavigate(); 
 
   const handleSubmit = async (event) => {
     event.preventDefault();

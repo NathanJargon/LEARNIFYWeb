@@ -6,12 +6,13 @@ import Register from './Register';
 import UserHome from './UserHome';
 import InstructerHome from './InstructerHome';
 import CreateCourse from './CreateCourse';
+import Course from './Course';
 
 function RedirectToLogin() {
   const navigate = useNavigate();
 
   React.useEffect(() => {
-    navigate('/login');
+    navigate('/dashboard');
   }, [navigate]);
 
   return null;
@@ -28,6 +29,7 @@ function App() {
         <Route path="/home" element={<UserHome />} />
         <Route path="/instructor" element={<InstructerHome />} />
         <Route path="/createcourse" element={<CreateCourse />} />
+        <Route path="/course/:courseId" element={<Course />} />
       </Routes>
     </Router>
   );

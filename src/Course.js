@@ -52,41 +52,7 @@ function Home() {
           <img src={profile} alt="Profile" className="profile-icon" />
         </div>
       </div>
-      <div className="big-text">
-        <h2>Take IT education experience to the next level</h2>
-      </div>
-      <div className="search-profile-below">
-        <img src={profile} alt="Profile" className="profile-icon-below" />
-        <div className="search-box-below" onClick={navigateToCreateCourse}>
-          <input type="text" placeholder="Create a Course..." readOnly />
-        </div>
-      </div>
-      <div className="courses-title">
-      <h3>Your Courses</h3>
-        <div className="container">
-          <div className="course-grid">
-            {courses.map((course) => (
-              <div className="course-card" key={course.id}>
-                <div className="card" style={{ backgroundImage: `url(${course.courseImage})` }}>
-                  <div className="card-body">
-                    <h2>{firebase.auth().currentUser.email}</h2>
-                    <h5 className="card-title">{course.courseName}</h5>
-                    <div className="d-flex justify-content-between align-items-center">
-                      <div>
-                        <span>50% Complete</span> 
-                        <div className="progress">
-                          <div className="progress-bar" role="progressbar" style={{ width: `50%` }} aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                      </div>
-                      <button className="btn btn-primary" onClick={() => navigate(`/course/${course.id}`)}>View Course</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+
     </div>
   );
 }

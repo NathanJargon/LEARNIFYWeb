@@ -114,3 +114,16 @@
     margin-left: 60px; /* Push the submit button to the right */
     /* ... rest of your CSS code */
 }
+
+.course-form input[type="file"] {
+    display: block;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 20px;
+    background: #f8f8f8;
+    cursor: pointer;
+}
+
+.course-form input[type="file"]:hover {
+    background: #e8e8e8;
+}
