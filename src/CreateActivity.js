@@ -24,21 +24,27 @@ function CreateActivity() {
   
     const user = firebase.auth().currentUser;
     const db = firebase.firestore();
-  
-    const docId = `${activityName}-${user.uid}`; 
-  
-    await db.collection('activities').doc(docId).set({
-      activityName,
-      activityNumber,
-      activityDescription,
-      numberOfItems,
-      questions,
-      userEmail: user.email,
-      userId: user.uid,
-      courseId: courseId, // include the courseId
-    });
-  
-    navigate('/instructor');
+
+    if (user) {
+      const docId = `${activityName}-${user.uid}`; 
+    
+      await db.collection('activities').doc(docId).set({
+        id: docId,
+        activityName,
+        activityNumber,
+        activityDescription,
+        numberOfItems,
+        questions,
+        userEmail: user.email,
+        userId: user.uid,
+        courseId: courseId,
+      });
+    
+      navigate('/instructor');
+    } else {
+      // Handle the case where no user is signed in.
+      console.error('No user is currently signed in.');
+    }
   };
 
   const handleQuestionChange = (event) => {
@@ -132,8 +138,15 @@ function CreateActivity() {
 
             <label>
               Correct Answer:
-              <input type="text" value={question.correctAnswer} onChange={e => handleCorrectAnswerChange(e)} />
+              <select value={question.correctAnswer} onChange={e => handleCorrectAnswerChange(e)}>
+                {question.choices.map((choice, index) => (
+                  <option key={index} value={index + 1}>
+                    Choice {index + 1}
+                  </option>
+                ))}
+              </select>
             </label>
+
           </div>
         ))}
 

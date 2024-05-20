@@ -81,6 +81,7 @@
 .content-course-card {
   flex: 0 0 calc(33.3333% - 20px);
   margin-bottom: 20px;
+  cursor: pointer;
 }
 
 .content-card:hover {
@@ -194,4 +195,35 @@
   font-size: 0.75em;
   line-height: 1;
   color: #333;
+}
+
+.content-students {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.content-students {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.students-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px; /* adjust as needed */
+}
+
+.dropdown-menu-card {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  z-index: 1;
 }

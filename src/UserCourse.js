@@ -16,11 +16,12 @@ function CourseContent() {
   const [course, setCourse] = useState(null);
   const [comments, setComments] = useState([]);
   const [activities, setActivities] = useState([]);
-
+  const [isDropdownVisible, setDropdownVisible] = useState(false);
+  
   useEffect(() => {
     const db = firebase.firestore(); // define db here
 
-    const fetchCourse = async () => {
+    const fetchCourseAndActivities = async () => {
       console.log('Fetching course with id:', courseId);
         
       const doc = await db.collection('courses').doc(courseId).get();
@@ -32,9 +33,14 @@ function CourseContent() {
       } else {
         console.error('No course found with this id!');
       }
+
+      // Fetch activities
+      const activitiesSnapshot = await db.collection('activities').where('courseId', '==', courseId).get();
+      const activitiesData = activitiesSnapshot.docs.map(doc => doc.data());
+      setActivities(activitiesData);
     };
 
-    fetchCourse();
+    fetchCourseAndActivities();
   }, [courseId]);
 
   const handleCommentSubmit = async (event) => {
@@ -56,6 +62,12 @@ function CourseContent() {
     event.target.reset();
   };
 
+  const handleLogout = async () => {
+    await firebase.auth().signOut();
+    navigate('/dashboard'); // navigate to the dashboard page
+  };
+
+
   return (
     <div className="content-container">
       <div className="header-box">
@@ -69,6 +81,15 @@ function CourseContent() {
             <FaSearch />
           </div>
           <img src={bell} alt="Notifications" className="bell-icon" />
+          <img src={profile} alt="Profile" className="profile-icon" onClick={() => setDropdownVisible(!isDropdownVisible)} />
+
+          {isDropdownVisible && (
+            <div className="dropdown-menu">
+              <button onClick={handleLogout}>Log out</button>
+            </div>
+          )}
+
+
         </div>
       </div>
 
@@ -117,16 +138,20 @@ function CourseContent() {
       <h3>Activities</h3>
         <div className="content-activitycontainer">
         <div className="content-course-grid">
-          {activities.map((activity, index) => (
-            <div className="content-course-card" key={index}>
-              <div className="content-card" style={{ backgroundImage: `url(${activity.image})` }}>
-                <div className="content-card-body">
-                  <img src={cardBackground} alt="Activity Logo" /> 
-                  <h5 className="content-card-title">{`Activity ${index + 1}`}</h5>
-                </div>
+        {activities.map((activity, index) => (
+          <div 
+            className="content-course-card" 
+            key={index} 
+            onClick={() => navigate(`/activity/${activity.id}`)}
+          >
+            <div className="content-card" style={{ backgroundImage: `url(${activity.image})` }}>
+              <div className="content-card-body">
+                <img src={cardBackground} alt="Activity Logo" /> 
+                <h5 className="content-card-title">{`Activity ${index + 1}`}</h5>
               </div>
             </div>
-          ))}
+          </div>
+        ))}
         </div>
         </div>
       </div>

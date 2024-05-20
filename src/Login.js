@@ -41,6 +41,8 @@ function Login() {
           return;
         }
         if (doc.data().password === password && doc.data().instructor === isInstructor) {
+          // Sign in the user with Firebase Authentication
+          await firebase.auth().signInWithEmailAndPassword(email, password);
           console.log('Logged in successfully');
           // navigate to different pages based on isInstructor
           if (isInstructor) {
