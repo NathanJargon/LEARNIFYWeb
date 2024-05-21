@@ -14,7 +14,8 @@ function Home() {
   const [courses, setCourses] = useState([]); // add this line
   const [isDropdownVisible, setDropdownVisible] = useState(false);
   const [progress, setProgress] = useState({});
-  
+  const [searchTerm, setSearchTerm] = useState('');
+
   useEffect(() => {
     const fetchActivityResult = async () => {
       const db = firebase.firestore();
@@ -108,9 +109,9 @@ function Home() {
         </div>
         <div className="search-profile">
           <div className="search-box">
-            <input type="text" placeholder="Search Courses" />
-            <FaSearch />
-          </div>
+          <input type="text" placeholder="Search Courses" onChange={e => setSearchTerm(e.target.value)} />
+          <FaSearch />
+        </div>
           <img src={bell} alt="Notifications" className="bell-icon" />
           <img src={profile} alt="Profile" className="profile-icon" onClick={() => setDropdownVisible(!isDropdownVisible)} />
           
@@ -135,8 +136,8 @@ function Home() {
       <div className="courses-title">
       <h3>Your Courses</h3>
         <div className="container">
-          <div className="course-grid">
-          {courses.map((course) => (
+        <div className="course-grid">
+          {courses.filter(course => course.courseName.toLowerCase().includes(searchTerm.toLowerCase())).map((course) => (
             <div className="course-card" key={course.id}>
               <div className="card" style={{ backgroundImage: `url(${html})` }}>
                 <div className="card-body">

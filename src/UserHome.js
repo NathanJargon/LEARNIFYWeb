@@ -12,6 +12,7 @@ function Home() {
   const [courses, setCourses] = useState([]); 
   const [isDropdownVisible, setDropdownVisible] = useState(false);
   const [progress, setProgress] = useState({});
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -93,9 +94,9 @@ function Home() {
         </div>
         <div className="search-profile">
           <div className="search-box">
-            <input type="text" placeholder="Search Courses" />
-            <FaSearch />
-          </div>
+          <input type="text" placeholder="Search Courses" onChange={e => setSearchTerm(e.target.value)} />
+          <FaSearch />
+        </div>
           <img src={profile} alt="Profile" className="profile-icon" onClick={() => setDropdownVisible(!isDropdownVisible)} />
           
           {isDropdownVisible && (
@@ -113,7 +114,7 @@ function Home() {
       <h3>Courses</h3>
         <div className="container">
           <div className="course-grid">
-          {courses.map((course) => (
+          {courses.filter(course => course.courseName.toLowerCase().includes(searchTerm.toLowerCase())).map((course) => (
             <div className="course-card" key={course.id}>
               <div className="card" style={{ backgroundImage: `url(${html})` }}>
                 <div className="card-body">
