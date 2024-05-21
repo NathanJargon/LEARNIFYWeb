@@ -12,7 +12,7 @@ import { useParams } from 'react-router-dom';
 
 function Activity() {
   const navigate = useNavigate();
-  const { activityId } = useParams();
+  const { courseId, activityId } = useParams();
   const [activity, setActivity] = useState(null);
   const [selectedChoices, setSelectedChoices] = useState({});
   const allQuestionsAnswered = activity && activity.questions.every((_, index) => selectedChoices[index] !== undefined);
@@ -51,14 +51,16 @@ function Activity() {
         activityData.ActivityResult[existingResultIndex] = {
         userEmail: user.email,
         userId: user.uid,
-        score: score
+        score: score,
+        courseId: courseId,
         };
     } else {
         // If no result for the current user exists, add the new result
         activityData.ActivityResult.push({
         userEmail: user.email,
         userId: user.uid,
-        score: score
+        score: score,
+        courseId: courseId,
         });
     }
 

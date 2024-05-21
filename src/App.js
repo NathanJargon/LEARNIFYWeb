@@ -10,6 +10,8 @@ import Course from './Course';
 import CreateActivity from './CreateActivity';
 import UserCourse from './UserCourse';
 import Activity from './Activity';
+import EditCourse from './EditCourse';
+import EditActivity from './EditActivity';
 
 function RedirectToLogin() {
   const navigate = useNavigate();
@@ -35,7 +37,9 @@ function App() {
         <Route path="/course/:courseId" element={<Course />} />
         <Route path="/createactivity/:courseId" element={<CreateActivity />} />
         <Route path="/usercourse/:courseId" element={<UserCourse />} />
-        <Route path="/activity/:activityId" element={<Activity />} />
+        <Route path="/activity/:courseId/:activityId" element={<Activity />} />
+        <Route path="/editcourse/:courseId" element={<EditCourse />} />
+        <Route path="/editactivity/:courseId/:activityId" element={<EditActivity />} />
       </Routes>
     </Router>
   );

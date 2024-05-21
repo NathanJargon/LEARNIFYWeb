@@ -45,6 +45,16 @@ function CourseContent() {
     setDropdownVisible(null); // close the dropdown
   };
 
+  const handleEdit = (index, type) => {
+    if (type === 'learningMaterial') {
+      // Navigate to the edit page for the learning material at the given index
+      navigate(`/editLearningMaterial/${course.learningMaterials[index].id}`);
+    } else if (type === 'activity') {
+      // Navigate to the edit page for the activity at the given index
+      navigate(`/editActivity/${courseId}/${activities[index].id}`);
+    }
+  };
+
   useEffect(() => {
     const db = firebase.firestore(); // define db here
 
@@ -166,7 +176,7 @@ function CourseContent() {
       </div>
 
       <div className="content-students">
-        <h3 onClick={() => setStudentsVisible(!isStudentsVisible)}>Students Enrolled</h3>
+        <h3 className="clickable-header" onClick={() => setStudentsVisible(!isStudentsVisible)}>Students Enrolled</h3>
         {isStudentsVisible && (
           <div className="students-card">
             {students.map((student, index) => (
@@ -215,7 +225,7 @@ function CourseContent() {
         </button>
           <div className="content-learningcontainer">
             <div className="content-course-grid">
-            {course.learningMaterials.map((material, index) => (
+            {course && course.learningMaterials.map((material, index) => (
                 <div className="content-course-card" key={index} style={{ position: 'relative' }}>
               <FaEllipsisV 
                 className="dropdown-icon" 
@@ -252,7 +262,7 @@ function CourseContent() {
             <div 
               className="content-course-card" 
               key={index} 
-              onClick={() => navigate(`/activity/${activity.id}`)}
+              onClick={() => navigate(`/activity/${courseId}/${activity.id}`)}
               style={{ position: 'relative' }}
             >
               <FaEllipsisV 
@@ -266,6 +276,7 @@ function CourseContent() {
 
                 {dropdownCardVisible === index && (
                   <div className="dropdown-menu-card" onClick={(e) => e.stopPropagation()}>
+                    <button onClick={() => handleEdit(index, 'activity')}>Edit</button>
                     <button onClick={() => handleDelete(index, 'activity')}>Delete</button>
                   </div>
                 )}
@@ -293,7 +304,7 @@ function CourseContent() {
             {comments.slice().reverse().map((comment, index) => (
               <div className="content-comment" key={index}>
                 <p>{comment.text}</p>
-                <p>{comment.date.toDate().toLocaleString()}</p>
+                <p>{comment.date && comment.date.toDate ? comment.date.toDate().toLocaleString() : new Date(comment.date).toLocaleString()}</p>
               </div>
             ))}
           </div>
