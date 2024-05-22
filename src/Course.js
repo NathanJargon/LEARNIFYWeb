@@ -10,6 +10,7 @@ import bell from './images/bell.png';
 import { FaSearch, FaUserCircle } from 'react-icons/fa';
 import { useParams } from 'react-router-dom';
 import { FaEllipsisV } from 'react-icons/fa';
+import { FaUpload, FaPlus, FaUsers, FaPaperPlane, FaTrash } from 'react-icons/fa';
 
 function CourseContent() {
   const navigate = useNavigate();
@@ -22,6 +23,41 @@ function CourseContent() {
   const [isStudentsVisible, setStudentsVisible] = useState(false);
   const [dropdownCardVisible, setDropdownCardVisible] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
+
+  const handleCommentDelete = async (index) => {
+    const db = firebase.firestore();
+    const doc = await db.collection('courses').doc(courseId).get();
+
+    if (doc.exists) {
+      const courseData = doc.data();
+      const correctIndex = courseData.comments.length - 1 - index;
+      const newComments = courseData.comments.filter((_, commentIndex) => commentIndex !== correctIndex);
+
+      await db.collection('courses').doc(courseId).update({
+        comments: newComments,
+      });
+
+      // Fetch comments again after deletion
+      fetchComments();
+    } else {
+      console.error('No course found with this id!');
+    }
+  };
+
+  const fetchComments = async () => {
+    const doc = await firebase.firestore().collection('courses').doc(courseId).get();
+    if (doc.exists) {
+      const courseData = doc.data();
+      console.log(courseData);
+      setComments(courseData.comments || []); // set the comments state
+    } else {
+      console.error('No course found with this id!');
+    }
+  };
+  
+  useEffect(() => {
+    fetchComments();
+  }, [courseId]);
 
   const handleDelete = async (index, type) => {
     const db = firebase.firestore();
@@ -91,18 +127,23 @@ function CourseContent() {
     event.preventDefault();
     const commentText = event.target.elements[0].value;
     const db = firebase.firestore();
-
+  
+    // Don't proceed if commentText is empty
+    if (!commentText.trim()) {
+      return;
+    }
+  
     const newComment = {
       text: commentText,
       date: new Date(),
     };
-
+  
     setComments((prevComments) => [...prevComments, newComment]);
-
+  
     await db.collection('courses').doc(courseId).update({
       comments: firebase.firestore.FieldValue.arrayUnion(newComment),
     });
-
+  
     event.target.reset();
   };
 
@@ -119,26 +160,27 @@ function CourseContent() {
     }
   };
 
-  const handleUpload = async () => {
-  if (selectedFile) {
-    const storageRef = firebase.storage().ref();
-    const fileRef = storageRef.child(selectedFile.name);
-    await fileRef.put(selectedFile);
-    const fileUrl = await fileRef.getDownloadURL();
+  const handleFileChangeAndUpload = async (event) => {
+    const file = event.target.files[0];
+    if (file && file.type === 'application/pdf') {
+      const storageRef = firebase.storage().ref();
+      const fileRef = storageRef.child(file.name);
+      await fileRef.put(file);
+      const fileUrl = await fileRef.getDownloadURL();
 
-    const db = firebase.firestore();
-    await db.collection('courses').doc(courseId).update({
-      learningMaterials: firebase.firestore.FieldValue.arrayUnion(fileUrl),
-    });
+      const db = firebase.firestore();
+      await db.collection('courses').doc(courseId).update({
+        learningMaterials: firebase.firestore.FieldValue.arrayUnion(fileUrl),
+      });
 
-    setCourse((prevCourse) => ({
-      ...prevCourse,
-      learningMaterials: [...prevCourse.learningMaterials, fileUrl],
-    }));
-
-    setSelectedFile(null);
-  }
-};
+      setCourse((prevCourse) => ({
+        ...prevCourse,
+        learningMaterials: [...prevCourse.learningMaterials, fileUrl],
+      }));
+    } else {
+      alert('Please select a PDF file');
+    }
+  };
 
 
   return (
@@ -149,12 +191,8 @@ function CourseContent() {
             <h1>Learnify</h1>
           </div>
         <div className="search-profile">
-          <div className="search-box">
-            <input type="text" placeholder="Search Courses" />
-            <FaSearch />
-          </div>
-          <img src={bell} alt="Notifications" className="bell-icon" />
-          <img src={profile} alt="Profile" className="profile-icon" onClick={() => setDropdownVisible(!isDropdownVisible)} />
+          <FaUsers className="instructor-content-profile-icon" onClick={() => setStudentsVisible(!isStudentsVisible)} />
+          <img src={profile} alt="Profile" className="instructor-content-profile-icon" onClick={() => setDropdownVisible(!isDropdownVisible)} />
 
           {isDropdownVisible && (
             <div className="dropdown-menu">
@@ -162,7 +200,13 @@ function CourseContent() {
             </div>
           )}
 
-
+          {isStudentsVisible && (
+            <div className="dropdown-menu">
+              {students.map((student, index) => (
+                <p key={index}>{student.email}</p>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
@@ -175,54 +219,32 @@ function CourseContent() {
         <p className="course-description">{course ? course.courseDescription : 'Loading...'}</p>
       </div>
 
-      <div className="content-students">
-        <h3 className="clickable-header" onClick={() => setStudentsVisible(!isStudentsVisible)}>Students Enrolled</h3>
-        {isStudentsVisible && (
-          <div className="students-card">
-            {students.map((student, index) => (
-              <div className="content-student" key={index}>
-                <p>{student.email}</p>
-              </div>
-            ))}
-          </div>
-        )}
+      <div className="content-objectives">
+        <h3>Course Objectives</h3>
+        <p>{course ? course.courseObjectives : 'Loading...'}</p>
       </div>
-        
-        <div className="content-learningtitle">
-        <h3>Learning Materials</h3>
-        <input 
-          type="file" 
-          onChange={handleFileChange} 
-          style={{
-            display: 'none',
-            cursor: 'pointer',
-          }}
-          id="upload-button"
-        />
-        <label htmlFor="upload-button" style={{
-          padding: '10px',
-          color: 'white',
-          backgroundColor: '#007BFF',
-          borderRadius: '4px',
-          cursor: 'pointer',
-          marginBottom: '10px',
-        }}>
-          Select File
-        </label>
-        <button 
-          onClick={handleUpload} 
-          style={{
-            marginBottom: '30px',
-            padding: '10px',
-            marginLeft: '10px',
-            color: 'white',
-            backgroundColor: '#28a745',
-            borderRadius: '4px',
-            cursor: 'pointer',
-          }}
-        >
-          Upload
-        </button>
+
+      <div className="content-topics">
+        <h3>Course Topics</h3>
+        <p>{course ? course.courseTopics : 'Loading...'}</p>
+      </div>
+
+      <div className="content-learningtitle">
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <h3>Learning Materials</h3>
+          <input 
+            type="file" 
+            onChange={handleFileChangeAndUpload}
+            style={{
+              display: 'none',
+              cursor: 'pointer',
+            }}
+            id="upload-button"
+          />
+          <label htmlFor="upload-button" className="add-activity">
+            <FaPlus />
+          </label>
+        </div>
           <div className="content-learningcontainer">
             <div className="content-course-grid">
             {course && course.learningMaterials.map((material, index) => (
@@ -233,10 +255,10 @@ function CourseContent() {
                   e.stopPropagation(); 
                   setDropdownCardVisible(dropdownCardVisible === index ? false : index); 
                 }} 
-                style={{ position: 'absolute', top: '10px', right: '100px' }} 
+                style={{ position: 'absolute', top: '10px', right: '120px' }} 
               />
                   {dropdownCardVisible === index && (
-                    <div className="dropdown-menu-card" onClick={(e) => e.stopPropagation()}>
+                    <div className="dropdown-menu-card-2" onClick={(e) => e.stopPropagation()}>
                       <button onClick={() => handleDelete(index, 'learningMaterial')}>Delete</button>
                     </div>
                   )}
@@ -255,7 +277,11 @@ function CourseContent() {
         </div>
         
       <div className="content-activitytitle">
-        <h3>Activities <span className="add-activity" onClick={() => navigate(`/createactivity/${courseId}`)}>Add Activity</span></h3>
+        <h3>Activities 
+          <span className="add-activity" onClick={() => navigate(`/createactivity/${courseId}`)}>
+            <FaPlus />
+          </span>
+        </h3>
         <div className="content-activitycontainer">
         <div className="content-course-grid">
         {activities.map((activity, index) => (
@@ -271,12 +297,12 @@ function CourseContent() {
                   e.stopPropagation(); 
                   setDropdownCardVisible(dropdownCardVisible === index ? false : index); 
                 }} 
-                style={{ position: 'absolute', top: '10px', right: '100px' }} 
+                style={{ position: 'absolute', top: '10px', right: '120px' }} 
               />
 
                 {dropdownCardVisible === index && (
-                  <div className="dropdown-menu-card" onClick={(e) => e.stopPropagation()}>
-                    <button onClick={() => handleEdit(index, 'activity')}>Edit</button>
+                  <div className="dropdown-menu-card" onClick={(e) => e.stopPropagation()} style={{ display: 'flex', flexDirection: 'column' }}>
+                    <button style={{ marginBottom: '10px' }} onClick={() => handleEdit(index, 'activity')}>Edit</button>
                     <button onClick={() => handleDelete(index, 'activity')}>Delete</button>
                   </div>
                 )}
@@ -298,13 +324,16 @@ function CourseContent() {
         <div className="content-forumcontainer">
         <form className="content-forumform" onSubmit={handleCommentSubmit}>
           <textarea placeholder="Write a comment..." required />
-          <button type="submit">Post Comment</button>
+          <button type="submit">
+            <FaPaperPlane />
+          </button>
         </form>
           <div className="content-forumcomments">
             {comments.slice().reverse().map((comment, index) => (
               <div className="content-comment" key={index}>
                 <p>{comment.text}</p>
                 <p>{comment.date && comment.date.toDate ? comment.date.toDate().toLocaleString() : new Date(comment.date).toLocaleString()}</p>
+                <FaTrash className="delete-icon" onClick={() => handleCommentDelete(index)} />
               </div>
             ))}
           </div>

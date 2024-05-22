@@ -70,8 +70,7 @@
 
 .question-card {
   text-align: center;
-  border: 1px solid #000;
-  margin: 10px;
+  margin: 30px; /* Increase this value to add more space between each question box */
   padding: 10px;
   box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
 }
@@ -82,21 +81,42 @@
   margin: 10px;
   padding: 10px;
   box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+  border-radius: 0%; /* Make the choice box circular */
 }
 
-.submit-button {
-  display: block;
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 0px; /* Reduced gap between the buttons */
+}
+
+.submit-button, .quit-button {
   width: 200px;
   height: 50px;
-  margin: 20px auto;
-  background-color: #4CAF50;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-size: 18px;
+  margin: 20px 10px;
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
 }
 
-.submit-button:hover {
+.submit-button {
+  background-color: #4CAF50;
+}
+
+.submit-button:hover, .quit-button:hover {
   background-color: #45a049;
+}
+
+.quit-button {
+  background-color: #f44336; /* Red */
+}
+
+.submit-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
 }

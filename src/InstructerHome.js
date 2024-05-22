@@ -112,7 +112,6 @@ function Home() {
           <input type="text" placeholder="Search Courses" onChange={e => setSearchTerm(e.target.value)} />
           <FaSearch />
         </div>
-          <img src={bell} alt="Notifications" className="bell-icon" />
           <img src={profile} alt="Profile" className="profile-icon" onClick={() => setDropdownVisible(!isDropdownVisible)} />
           
           {isDropdownVisible && (
@@ -144,11 +143,11 @@ function Home() {
                   <h2>{firebase.auth().currentUser.email}</h2>
                   <h5 className="card-title">{course.courseName}</h5>
                   <div className="d-flex justify-content-between align-items-center">
-                    <button className="btn btn-primary" onClick={() => navigate(`/course/${course.id}`)}>View Course</button>
                     <div className="progress">
                       <div className="progress-bar" role="progressbar" style={{ width: `${progress[course.id] || 0}%` }} aria-valuenow={progress[course.id] || 0} aria-valuemin="0" aria-valuemax="100"></div>
-                      <span className="progress-percentage">{Math.round(progress[course.id] || 0)}%</span>
+                      <span className="progress-percentage">Progress: {Math.round(progress[course.id] || 0)}%</span>
                     </div>
+                    <button className="btn btn-primary" onClick={() => navigate(`/course/${course.id}`)}>View Course</button>
                   </div>
                 </div>
               </div>

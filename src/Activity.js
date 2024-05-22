@@ -18,6 +18,11 @@ function Activity() {
   const allQuestionsAnswered = activity && activity.questions.every((_, index) => selectedChoices[index] !== undefined);
   const [isDropdownVisible, setDropdownVisible] = useState(false);
   
+  const handleQuit = () => {
+    navigate(`/course/${courseId}`); // navigate to the dashboard page or any other page you want
+  };
+
+  
   const handleChoiceSelect = (questionIndex, choiceIndex) => {
     setSelectedChoices(prevChoices => ({
       ...prevChoices,
@@ -117,7 +122,6 @@ function Activity() {
             <input type="text" placeholder="Search Courses" />
             <FaSearch />
           </div>
-          <img src={bell} alt="Notifications" className="bell-icon" />
           <img src={profile} alt="Profile" className="profile-icon" onClick={() => setDropdownVisible(!isDropdownVisible)} />
 
           {isDropdownVisible && (
@@ -132,11 +136,11 @@ function Activity() {
 
       {activity && (
         <div className="activity-content">
-            <h2 className="activity-title">Activity: {activity.activityName}</h2>
-            {activity.questions.map((question, questionIndex) => (
+          <h2 className="activity-title">Activity: {activity.activityName}</h2>
+          {activity.questions.map((question, questionIndex) => (
             <div className="question-card" key={questionIndex}>
-                <p><strong>Question {questionIndex + 1}:</strong> {question.question}</p>
-                {question.choices.map((choice, choiceIndex) => (
+              <p><strong>Question {questionIndex + 1}:</strong> {question.question}</p>
+              {question.choices.map((choice, choiceIndex) => (
                 <div className="choice-card" key={choiceIndex}>
                   <p><strong>Choice {choiceIndex + 1}:</strong> {choice}</p>
                   <input
@@ -148,11 +152,14 @@ function Activity() {
               ))}
             </div>
           ))}
-            {allQuestionsAnswered && (
-            <button className="submit-button" onClick={handleSubmit}>Submit</button>
-            )}
-        </div>
-      )}
+          <div className="button-container">
+            <button className="quit-button" onClick={handleQuit}>Quit</button>
+            <button className="submit-button" onClick={handleSubmit} disabled={!allQuestionsAnswered}>Submit</button>
+          </div>
+      </div>
+    )}
+
+
     </div>
   );
 }

@@ -60,6 +60,20 @@ function Login() {
     }
   };
 
+  const handleForgotPassword = () => {
+    const email = prompt("Please enter your email:");
+    if (email) {
+      firebase.auth().sendPasswordResetEmail(email)
+        .then(() => {
+          alert('Check your email for password reset instructions');
+        })
+        .catch((error) => {
+          console.error(error);
+          alert('Error resetting password');
+        });
+    }
+  };
+
   return (
     <div className="login-container">
       <div className="login-box">
@@ -82,7 +96,7 @@ function Login() {
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </i>
           </div>
-          <p className="forgot-password">Forgot Password?</p>
+        <p className="forgot-password" onClick={handleForgotPassword}>Forgot Password?</p>
           <button type="submit">Log in</button>
           </form>
         <div className="instructor-login">

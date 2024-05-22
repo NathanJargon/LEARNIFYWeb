@@ -7,7 +7,7 @@ import logo from './images/logo.png';
 import profile from './images/profile.png';
 import cardBackground from './images/html.png';
 import bell from './images/bell.png'; 
-import { FaSearch, FaUserCircle } from 'react-icons/fa';
+import { FaSearch, FaUserCircle, FaPaperPlane } from 'react-icons/fa';
 import { useParams } from 'react-router-dom';
 
 function CourseContent() {
@@ -47,18 +47,23 @@ function CourseContent() {
     event.preventDefault();
     const commentText = event.target.elements[0].value;
     const db = firebase.firestore();
-
+  
+    // Don't proceed if commentText is empty
+    if (!commentText.trim()) {
+      return;
+    }
+  
     const newComment = {
       text: commentText,
       date: new Date(),
     };
-
+  
     setComments((prevComments) => [...prevComments, newComment]);
-
+  
     await db.collection('courses').doc(courseId).update({
       comments: firebase.firestore.FieldValue.arrayUnion(newComment),
     });
-
+  
     event.target.reset();
   };
 
@@ -80,7 +85,6 @@ function CourseContent() {
             <input type="text" placeholder="Search Courses" />
             <FaSearch />
           </div>
-          <img src={bell} alt="Notifications" className="bell-icon" />
           <img src={profile} alt="Profile" className="profile-icon" onClick={() => setDropdownVisible(!isDropdownVisible)} />
 
           {isDropdownVisible && (
@@ -161,19 +165,20 @@ function CourseContent() {
         <div className="content-forumcontainer">
         <form className="content-forumform" onSubmit={handleCommentSubmit}>
           <textarea placeholder="Write a comment..." required />
-          <button type="submit">Post Comment</button>
+          <button type="submit">
+            <FaPaperPlane />
+          </button>
         </form>
           <div className="content-forumcomments">
             {comments.slice().reverse().map((comment, index) => (
               <div className="content-comment" key={index}>
                 <p>{comment.text}</p>
-                <p>{comment.date.toDate().toLocaleString()}</p>
+                <p>{comment.date && comment.date.toDate ? comment.date.toDate().toLocaleString() : new Date(comment.date).toLocaleString()}</p>
               </div>
             ))}
           </div>
         </div>
       </div>
-
     </div>
   );
 }
