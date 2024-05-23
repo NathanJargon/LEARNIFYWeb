@@ -1,0 +1,262 @@
+.content-container {
+  position: relative;
+  padding-top: 200px; 
+}
+
+.instructor-content-profile-icon {
+  width: 45px;
+  height: 30px;
+  margin-right: 30px;
+}
+
+.content-search-profile span {
+  vertical-align: middle; /* align the email vertically with the profile picture */
+}
+
+.content-profile-info {
+  margin-left: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.content-learningcontainer {
+  position: relative;
+}
+
+.content-info {
+  margin-top: 20px;
+  margin-left: 15em;
+}
+
+.content-title {
+  margin-bottom: 10px;
+}
+
+.content-learningtitle {
+  margin-left: 2em;
+  margin-top: 6em;
+  font-size: 30px;
+}
+
+.content-activitytitle {
+  margin-left: 2em;
+  margin-top: 4em;
+  font-size: 30px;
+}
+
+.content-description {
+  margin-top: 0;
+}
+
+.content-objectives {
+  margin-top: 7em;
+  margin-left: 5em;
+}
+
+.content-topics {
+  margin-top: 7em;
+  margin-left: 5em;
+}
+
+.content-card {
+  width: 80%; 
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+  background-size: cover;
+  background-position: center;
+}
+
+.content-course-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.content-course-card {
+  flex: 0 0 calc(33.3333% - 20px);
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.content-card:hover {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.content-card-body {
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.8); /* semi-transparent white */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.content-card-title {
+  margin-bottom: 15px;
+  font-size: 15px;
+  text-align: center;
+}
+
+.content-card-body img {
+  width: 100%; /* adjust this value as needed */
+  height: auto;
+}
+
+.content-btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+  color: #fff;
+  padding: 5px 10px; /* increase padding */
+  border-radius: 25px; /* add border radius */
+  font-size: 16px; /* increase font size */
+}
+
+.content-btn-primary:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+
+.content-card-body h2 {
+  max-width: 90%; /* limit the width to 90% of the card body */
+  overflow: hidden; /* hide the overflow */
+  text-overflow: ellipsis; /* add an ellipsis when the text overflows */
+  white-space: nowrap; /* prevent the text from wrapping to the next line */
+  font-size: 14px; /* reduce the font size */
+}
+
+.add-activity {
+  margin-left: 1em;
+  font-size: 30px;
+  color: blue;
+  cursor: pointer;
+}
+
+.content-forumtitle {
+  margin-left: 2em;
+  margin-top: 6em;
+  font-size: 30px;
+}
+
+.content-forumform {
+  position: relative; /* add this line */
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  width: 100%; 
+  border-radius: 25px;
+}
+
+.content-forumform textarea {
+  flex-grow: 1; 
+  margin-right: 10px;
+  width: 85%; /* adjust this value as needed */
+  min-height: 20px;
+  margin-bottom: 10px;
+  padding: 15px; /* decrease padding */
+  border: 1px solid #ccc;
+  border-radius: 25px; /* increase border radius */
+  resize: vertical;
+  font-size: 1em;
+  line-height: 1; /* adjust line height */
+}
+
+.content-forumform button {
+  position: absolute;
+  right: 30px;
+  flex-shrink: 0; 
+  width: 50px; 
+  height: 50px; 
+  padding: 10px;
+  color: #007BFF; /* change the color here */
+  border: none;
+  font-size: 1.5em;
+  border-radius: 50%; 
+  cursor: pointer;
+  display: flex; 
+  justify-content: center;
+  align-items: center;
+}
+
+.content-forumform textarea:focus {
+  border-color: #007BFF;
+  box-shadow: 0 0 5px rgba(0,123,255,.5);
+}
+
+.delete-icon {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  cursor: pointer;
+  color: #ff0000;
+  z-index: 1;
+
+}
+
+.content-comment {
+  position: relative;
+  margin-bottom: 10px;
+  width: 50%; /* specify the width */
+  height: 10%; /* specify the height */
+  padding: 15px;
+  padding-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #f8f9fa;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  font-size: 0.75em;
+  line-height: 1;
+  color: #333;
+}
+
+.content-students {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.content-students {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.students-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px; /* adjust as needed */
+}
+
+.dropdown-menu-card {
+  position: absolute;
+  right: 40px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  z-index: 1;
+}
+
+.dropdown-menu-card-2 {
+  position: absolute;
+  right: 40px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  padding-top: 0px;
+  z-index: 1;
+}
+
+.clickable-header {
+  border: 1px solid #000;
+  padding: 10px;
+  cursor: pointer;
+}

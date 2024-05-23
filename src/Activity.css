@@ -1,0 +1,122 @@
+.content-container {
+  position: relative;
+  padding-top: 200px; 
+}
+
+.content-profile-icon {
+  margin-right: 10px;
+  border-radius: 50%;
+  overflow: 'hidden';
+  width: 70px;
+  height: 50px;
+}
+
+.content-search-profile span {
+  vertical-align: middle; /* align the email vertically with the profile picture */
+}
+
+.content-profile-info {
+  margin-left: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.content-learningcontainer {
+  position: relative;
+}
+
+.content-info {
+  margin-top: 20px;
+  margin-left: 15em;
+}
+
+.content-title {
+  margin-bottom: 10px;
+}
+
+.content-learningtitle {
+  margin-left: 2em;
+  margin-top: 6em;
+  font-size: 30px;
+}
+
+.activity-title {
+  margin-top: 1em;
+  font-size: 30px;
+  text-align: center;
+}
+
+.content-activitytitle {
+  margin-left: 2em;
+  margin-top: 4em;
+  font-size: 30px;
+}
+
+
+.content-description {
+  margin-top: 0;
+}
+
+.content-objectives {
+  margin-top: 7em;
+  margin-left: 5em;
+}
+
+.content-topics {
+  margin-top: 7em;
+  margin-left: 5em;
+}
+
+.question-card {
+  text-align: center;
+  margin: 30px; /* Increase this value to add more space between each question box */
+  padding: 10px;
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+}
+
+.choice-card {
+  text-align: center;
+  border: 1px solid #000;
+  margin: 10px;
+  padding: 10px;
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+  border-radius: 0%; /* Make the choice box circular */
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 0px; /* Reduced gap between the buttons */
+}
+
+.submit-button, .quit-button {
+  width: 200px;
+  height: 50px;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+  margin: 20px 10px;
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+}
+
+.submit-button {
+  background-color: #4CAF50;
+}
+
+.submit-button:hover, .quit-button:hover {
+  background-color: #45a049;
+}
+
+.quit-button {
+  background-color: #f44336; /* Red */
+}
+
+.submit-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}

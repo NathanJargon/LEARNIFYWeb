@@ -1,0 +1,222 @@
+.home-container {
+  position: relative;
+  padding-top: 10px; 
+}
+
+.header-box {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  border: none;
+  padding: 5px;
+  box-sizing: border-box;
+  background-color: #fff; 
+  z-index: 100;
+  box-shadow: 0 2px 150px rgba(0, 0, 0, 0.4); 
+}
+
+.instructor-logo-title {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.instructor-logo-title .logo {
+  width: 70px;
+  height: 50px;
+  margin-right: 20px;
+}
+
+.search-profile {
+  display: flex;
+  align-items: center;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  border: 1px solid #000;
+  border-radius: 20px;
+  padding: 10px 50px;
+  margin-right: 25px;
+}
+
+.search-box input {
+  border: none;
+  margin-right: 10px;
+}
+
+.search-box input {
+  border: none;
+  margin-right: 10px;
+  outline: none;
+}
+
+.profile-icon {
+  width: 40px;
+  height: 30px;
+  margin-right: 20px;
+}
+
+.big-text {
+  text-align: center;
+  font-size: 2em; 
+  padding: 150px;
+}
+
+.courses-title {
+  padding-left: 50px;
+  font-size: 2em; 
+}
+
+.bell-icon {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+}
+
+.search-profile-below {
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  padding: 5px; 
+}
+
+.profile-icon-below {
+  width: 40px;
+  height: 30px;
+  margin-left: auto; /* This will push the profile icon to the right */
+}
+
+.search-box-below {
+  display: flex;
+  align-items: center;
+  width: 80%; 
+  height: 50px; 
+  border-radius: 25px;
+  box-shadow: 0 2px 100px rgba(0, 0, 0, 0.3); 
+  margin: 0 auto; 
+  padding: 10px 20px;
+}
+
+.search-box-below input {
+  border: none;
+  margin-right: 10px;
+  outline: none;
+  width: 100%; 
+}
+
+
+.card {
+  width: 80%; 
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+  background-size: cover;
+  background-position: center;
+}
+
+.course-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.course-card {
+  flex: 0 0 calc(33.3333% - 20px);
+  margin-bottom: 20px;
+}
+
+.card:hover {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.card-body {
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.8); /* semi-transparent white */
+}
+
+.card-title {
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+  color: #fff;
+  padding: 5px 10px; /* increase padding */
+  border-radius: 25px; /* add border radius */
+  font-size: 16px; /* increase font size */
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+
+.card-body h2 {
+    max-width: 90%; /* limit the width to 90% of the card body */
+    overflow: hidden; /* hide the overflow */
+    text-overflow: ellipsis; /* add an ellipsis when the text overflows */
+    white-space: nowrap; /* prevent the text from wrapping to the next line */
+    font-size: 14px; /* reduce the font size */
+}
+
+.progress {
+  background-color: red;
+  margin-top: 20px;
+  width: 100%;
+  height: 20px;
+  border-radius: 10px; /* add border radius */
+}
+
+.progress-bar {
+  background-color: #007bff !important;
+  width: 50%;
+  border-radius: 10px; /* add border radius */
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  z-index: 1;
+}
+
+
+.progress-percentage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 12px;
+}
+
+.progress {
+  position: relative; 
+background-color: #f3f3f3;
+border-radius: 50px;
+height: 20px;
+width: 100%;
+padding: 3px;
+}
+
+.progress-bar {
+background-color: #4caf50;
+width: 0%; /* Set the initial width to 0 */
+height: 100%;
+border-radius: 50px;
+transition: width 0.4s ease-in-out; /* Add a transition effect */
+}

@@ -1,0 +1,89 @@
+.register-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.register-box {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    border: none;
+    padding: 2em;
+    border-radius: 1em;
+}
+
+.register-box form {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.register-box form label {
+    align-self: flex-start;
+}
+
+.register-box form input {
+    padding: 1em;
+    border-radius: 0.5em;
+    border: 0.15px solid grey;
+}
+
+.register-box form button {
+    padding: 1.25em;
+    border-radius: 0.5em;
+    background-color: blue;
+    color: white;
+    border: none;
+    font-weight: bold; 
+}
+
+.forgot-password {
+    align-self: flex-end;
+    margin-top: 1em;
+}
+
+.password-container, .email-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-container input, .email-container input {
+    flex-grow: 1;
+    padding-right: 2em; 
+}
+
+.register-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    position: relative;
+  }
+
+
+.password-container i, .email-container i {
+    position: absolute;
+    right: 1em;
+    cursor: pointer;
+}
+
+.instructor-signup {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+    margin-top: 50px;
+}
+
+.instructor-signup hr {
+    flex-grow: 1;
+    border: none;
+    border-top: 1px solid #000;
+}
+
+.instructor-signup p {
+    margin: 0 20px;
+    cursor: pointer;
+}
