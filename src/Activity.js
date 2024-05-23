@@ -115,7 +115,7 @@ function Activity() {
   return (
     <div className="content-container">
       <div className="header-box">
-        <div className="logo-title" onClick={() => navigate('/instructor')}>
+        <div className="logo-title" onClick={() => navigate('/home')}>
           <img src={logo} alt="Logo" className="logo" />
           <h1>Learnify</h1>
         </div>

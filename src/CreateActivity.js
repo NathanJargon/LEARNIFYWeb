@@ -36,7 +36,7 @@ function CreateActivity() {
         numberOfItems,
         questions,
         userEmail: user.email,
-        userId: user.uid,
+        userId: docId,
         courseId: courseId,
       });
     

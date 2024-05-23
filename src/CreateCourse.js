@@ -20,10 +20,12 @@ function Home() {
   const handleSubmit = async (event) => {
     event.preventDefault();
   
+    const sanitizedCourseName = courseName.replace(/\s/g, '');
+
     const user = firebase.auth().currentUser;
     const db = firebase.firestore();
   
-    const docId = `${courseName}-${user.uid}`; 
+    const docId = `${sanitizedCourseName}-${user.uid}`;   
   
     // upload the course image to Firebase Storage
     const storageRef = firebase.storage().ref();
