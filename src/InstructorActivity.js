@@ -75,6 +75,8 @@ function Activity() {
     });
 
     console.log('Activity result has been saved.');
+
+    alert(`Your score is ${score}`);
     };
 
   useEffect(() => {

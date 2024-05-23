@@ -18,6 +18,7 @@ function CourseContent() {
   const [activities, setActivities] = useState([]);
   const [isDropdownVisible, setDropdownVisible] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
+  const [userScores, setUserScores] = useState({});
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
@@ -35,29 +36,44 @@ function CourseContent() {
 
 
   useEffect(() => {
-    const db = firebase.firestore(); // define db here
+    if (currentUser) {
+      const db = firebase.firestore(); // define db here
 
-    const fetchCourseAndActivities = async () => {
-      console.log('Fetching course with id:', courseId);
-        
-      const doc = await db.collection('courses').doc(courseId).get();
-        
-      if (doc.exists) {
-        const courseData = doc.data();
-        setCourse(courseData); // set the course state
-        setComments(courseData.comments || []); // set the comments state
-      } else {
-        console.error('No course found with this id!');
-      }
+      const fetchCourseAndActivities = async () => {
+        console.log('Fetching course with id:', courseId);
+          
+        const doc = await db.collection('courses').doc(courseId).get();
+          
+        if (doc.exists) {
+          const courseData = doc.data();
+          setCourse(courseData); // set the course state
+          setComments(courseData.comments || []); // set the comments state
+        } else {
+          console.error('No course found with this id!');
+        }
 
-      // Fetch activities
-      const activitiesSnapshot = await db.collection('activities').where('courseId', '==', courseId).get();
-      const activitiesData = activitiesSnapshot.docs.map(doc => doc.data());
-      setActivities(activitiesData);
-    };
+        // Fetch activities
+        const activitiesSnapshot = await db.collection('activities').where('courseId', '==', courseId).get();
+        const activitiesData = activitiesSnapshot.docs.map(doc => doc.data());
 
-    fetchCourseAndActivities();
-  }, [courseId]);
+        // Fetch the user's scores
+        const userScores = {};
+        for (const activity of activitiesData) {
+          const userResult = activity.ActivityResult.find(result => result.userEmail === currentUser.email);
+          if (userResult) {
+            userScores[activity.id] = userResult.score;
+          }
+        }
+
+        console.log('User Scores:', JSON.stringify(userScores, null, 2));
+
+        setActivities(activitiesData);
+        setUserScores(userScores);
+      };
+
+      fetchCourseAndActivities();
+    }
+  }, [courseId, currentUser]);
 
   const handleCommentSubmit = async (event) => {
     event.preventDefault();
@@ -161,20 +177,25 @@ function CourseContent() {
         <div className="content-course-grid">
         {activities.map((activity, index) => (
           <div 
-            className="content-course-card" 
+          className="content-course-card" 
             key={index} 
             onClick={() => navigate(`/activity/${courseId}/${activity.id}`)}
           >
             <div className="content-card" style={{ backgroundImage: `url(${activity.image})` }}>
               <div className="content-card-body">
                 <img src={cardBackground} alt="Activity Logo" /> 
-                <h5 className="content-card-title">{`Activity ${index + 1}`}</h5>
+                <h5 className="content-card-title">
+                  {`Activity ${index + 1}`}
+                </h5>
+                {userScores[activity.id] !== undefined && 
+                  <h3>{`Score: ${userScores[activity.id]}/10`}</h3>
+                }
               </div>
             </div>
           </div>
-        ))}
-        </div>
-        </div>
+          ))}
+          </div>
+          </div>
       </div>
 
       <div className="content-forumtitle">
