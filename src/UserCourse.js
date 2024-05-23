@@ -17,7 +17,23 @@ function CourseContent() {
   const [comments, setComments] = useState([]);
   const [activities, setActivities] = useState([]);
   const [isDropdownVisible, setDropdownVisible] = useState(false);
-  
+  const [currentUser, setCurrentUser] = useState(null);
+
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        // User is signed in, set the user to the currentUser state
+        setCurrentUser(user);
+      } else {
+        // No user is signed in
+        setCurrentUser(null);
+      }
+
+      console.log("User:", user.email);
+    });
+  }, []);
+
+
   useEffect(() => {
     const db = firebase.firestore(); // define db here
 
@@ -47,23 +63,24 @@ function CourseContent() {
     event.preventDefault();
     const commentText = event.target.elements[0].value;
     const db = firebase.firestore();
-  
+
     // Don't proceed if commentText is empty
     if (!commentText.trim()) {
       return;
     }
-  
+
     const newComment = {
       text: commentText,
       date: new Date(),
+      userEmail: currentUser ? currentUser.email : 'Anonymous', // add the user's email to the comment
     };
-  
+
     setComments((prevComments) => [...prevComments, newComment]);
-  
+
     await db.collection('courses').doc(courseId).update({
       comments: firebase.firestore.FieldValue.arrayUnion(newComment),
     });
-  
+
     event.target.reset();
   };
 
@@ -146,7 +163,7 @@ function CourseContent() {
           <div 
             className="content-course-card" 
             key={index} 
-            onClick={() => navigate(`/activity/${activity.id}`)}
+            onClick={() => navigate(`/activity/${courseId}/${activity.id}`)}
           >
             <div className="content-card" style={{ backgroundImage: `url(${activity.image})` }}>
               <div className="content-card-body">
@@ -170,15 +187,17 @@ function CourseContent() {
           </button>
         </form>
           <div className="content-forumcomments">
-            {comments.slice().reverse().map((comment, index) => (
-              <div className="content-comment" key={index}>
-                <p>{comment.text}</p>
-                <p>{comment.date && comment.date.toDate ? comment.date.toDate().toLocaleString() : new Date(comment.date).toLocaleString()}</p>
-              </div>
-            ))}
+          {comments.slice().reverse().map((comment, index) => (
+            <div className="content-comment" key={index}>
+              <p>{comment.userEmail || "Anonymous"}</p>
+              <p>{comment.text}</p>
+              <p>{comment.date && comment.date.toDate ? comment.date.toDate().toLocaleString() : new Date(comment.date).toLocaleString()}</p>
+            </div>
+          ))}
           </div>
         </div>
       </div>
+
     </div>
   );
 }

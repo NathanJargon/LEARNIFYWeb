@@ -19,7 +19,7 @@ function Activity() {
   const [isDropdownVisible, setDropdownVisible] = useState(false);
   
   const handleQuit = () => {
-    navigate(`/usercourse/${courseId}`); // navigate to the dashboard page or any other page you want
+    navigate(`/course/${courseId}`); // navigate to the dashboard page or any other page you want
   };
 
   

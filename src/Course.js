@@ -23,6 +23,21 @@ function CourseContent() {
   const [isStudentsVisible, setStudentsVisible] = useState(false);
   const [dropdownCardVisible, setDropdownCardVisible] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
+
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        // User is signed in, set the user to the currentUser state
+        setCurrentUser(user);
+      } else {
+        // No user is signed in
+        setCurrentUser(null);
+      }
+
+      console.log("User:", user.email);
+    });
+  }, []);
 
   const handleCommentDelete = async (index) => {
     const db = firebase.firestore();
@@ -127,23 +142,24 @@ function CourseContent() {
     event.preventDefault();
     const commentText = event.target.elements[0].value;
     const db = firebase.firestore();
-  
+
     // Don't proceed if commentText is empty
     if (!commentText.trim()) {
       return;
     }
-  
+
     const newComment = {
       text: commentText,
       date: new Date(),
+      userEmail: currentUser ? currentUser.email : 'Anonymous', // add the user's email to the comment
     };
-  
+
     setComments((prevComments) => [...prevComments, newComment]);
-  
+
     await db.collection('courses').doc(courseId).update({
       comments: firebase.firestore.FieldValue.arrayUnion(newComment),
     });
-  
+
     event.target.reset();
   };
 
@@ -288,7 +304,7 @@ function CourseContent() {
             <div 
               className="content-course-card" 
               key={index} 
-              onClick={() => navigate(`/activity/${courseId}/${activity.id}`)}
+              onClick={() => navigate(`/instructoractivity/${courseId}/${activity.id}`)}
               style={{ position: 'relative' }}
             >
               <FaEllipsisV 
@@ -329,13 +345,13 @@ function CourseContent() {
           </button>
         </form>
           <div className="content-forumcomments">
-            {comments.slice().reverse().map((comment, index) => (
-              <div className="content-comment" key={index}>
-                <p>{comment.text}</p>
-                <p>{comment.date && comment.date.toDate ? comment.date.toDate().toLocaleString() : new Date(comment.date).toLocaleString()}</p>
-                <FaTrash className="delete-icon" onClick={() => handleCommentDelete(index)} />
-              </div>
-            ))}
+          {comments.slice().reverse().map((comment, index) => (
+            <div className="content-comment" key={index}>
+              <p>{comment.userEmail || "Anonymous"}</p>
+              <p>{comment.text}</p>
+              <p>{comment.date && comment.date.toDate ? comment.date.toDate().toLocaleString() : new Date(comment.date).toLocaleString()}</p>
+            </div>
+          ))}
           </div>
         </div>
       </div>

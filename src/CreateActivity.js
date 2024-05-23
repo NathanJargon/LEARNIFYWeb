@@ -26,7 +26,7 @@ function CreateActivity() {
     const db = firebase.firestore();
 
     if (user) {
-      const docId = `${activityName}-${user.uid}`; 
+      const docId = `${activityName.replace(/\s/g, '')}-${user.uid}`; 
     
       await db.collection('activities').doc(docId).set({
         id: docId,

@@ -32,7 +32,7 @@ function Home() {
       console.log('Activity results:', activityResults);
   
       const courseActivityResults = courses.reduce((acc, course) => {
-        acc[course.id] = activityResults.filter(ar => ar.userEmail === user.email && ar.courseId === course.id);
+        acc[course.id] = activityResults.filter(ar => ar && ar.userEmail === user.email && ar.courseId === course.id);
         return acc;
       }, {});
   
