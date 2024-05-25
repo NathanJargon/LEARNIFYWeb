@@ -24,6 +24,7 @@ function CourseContent() {
   const [dropdownCardVisible, setDropdownCardVisible] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
+  const [userScores, setUserScores] = useState({});
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
@@ -128,6 +129,23 @@ function CourseContent() {
       console.log(activitiesData);
       setActivities(activitiesData);
 
+      const userScores = {};
+      for (const activity of activitiesData) {
+        if (currentUser) {
+          const userResult = activity.ActivityResult.find(result => result.userEmail === currentUser.email);
+          if (userResult) {
+            userScores[activity.id] = {
+              score: userResult.score,
+              totalItems: activity.numberOfItems
+            };
+          }
+        }
+      }
+
+      setUserScores(userScores);
+
+      console.log('User Scores:', JSON.stringify(userScores, null, 2));
+              
       // Fetch students
       const studentsSnapshot = await db.collection('users').where('instructor', '==', false).get();
       const studentsData = studentsSnapshot.docs.map(doc => doc.data());
@@ -136,7 +154,7 @@ function CourseContent() {
     };
 
     fetchCourseAndActivities();
-  }, [courseId]);
+  }, [courseId, currentUser]);
 
   const handleCommentSubmit = async (event) => {
     event.preventDefault();
@@ -279,7 +297,7 @@ function CourseContent() {
                     </div>
                   )}
                   <a href={material} download>
-                    <div className="content-card" style={{ backgroundImage: `url(${material})` }}>
+                  <div className="content-card" style={{ backgroundImage: `url(${material})` }}>
                       <div className="content-card-body">
                         <img src={cardBackground} alt="HTML Logo" /> 
                         <h5 className="content-card-title">{`Learning Material ${index + 1}`}</h5>
@@ -327,6 +345,11 @@ function CourseContent() {
                 <div className="content-card-body">
                   <img src={cardBackground} alt="Activity Logo" /> 
                   <h5 className="content-card-title">{`Activity ${index + 1}`}</h5>
+                  {userScores[activity.id] !== undefined && 
+                    <div className="score-container">
+                      <h3>{`Score: ${userScores[activity.id].score}/${userScores[activity.id].totalItems}`}</h3>
+                    </div>
+                  }
                 </div>
               </div>
             </div>
@@ -346,10 +369,15 @@ function CourseContent() {
         </form>
           <div className="content-forumcomments">
           {comments.slice().reverse().map((comment, index) => (
-            <div className="content-comment" key={index}>
-              <p>{comment.userEmail || "Anonymous"}</p>
-              <p>{comment.text}</p>
-              <p>{comment.date && comment.date.toDate ? comment.date.toDate().toLocaleString() : new Date(comment.date).toLocaleString()}</p>
+            <div className="content-comment" key={index} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div>
+                <p>{comment.userEmail || "Anonymous"}</p>
+                <p>{comment.text}</p>
+                <p>{comment.date && comment.date.toDate ? comment.date.toDate().toLocaleString() : new Date(comment.date).toLocaleString()}</p>
+              </div>
+              <button onClick={() => handleCommentDelete(index)} style={{ border: 'none', background: 'none', color: 'red', fontSize: '20px' }}>
+                <FaTrash />
+              </button>
             </div>
           ))}
           </div>

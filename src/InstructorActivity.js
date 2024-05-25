@@ -30,26 +30,32 @@ function Activity() {
     }));
   };
 
-    const handleSubmit = async () => {
+  const handleSubmit = async () => {
     // Calculate the score
     const score = activity.questions.reduce((totalScore, question, index) => {
-        if (selectedChoices[index] === question.correctAnswer) {
+      if (Number(selectedChoices[index]) === Number(question.correctAnswer)) {
         return totalScore + 1;
-        } else {
+      } else {
         return totalScore;
-        }
+      }
     }, 0);
-
+  
     // Get the currently logged-in user
     const user = firebase.auth().currentUser;
-
+  
     // Get the Firestore document
     const db = firebase.firestore();
     const doc = await db.collection('activities').doc(activityId).get();
     const activityData = doc.data();
-
+  
+    // Initialize ActivityResult if it doesn't exist
+    if (!activityData.ActivityResult) {
+      activityData.ActivityResult = [];
+    }
+  
     // Check if a result for the current user already exists
     const existingResultIndex = activityData.ActivityResult.findIndex(result => result.userEmail === user.email);
+  
 
     if (existingResultIndex !== -1) {
         // If a result for the current user already exists, replace it with the new result
@@ -95,9 +101,13 @@ function Activity() {
         console.log('No user is logged in.');
       }
 
-      
       if (doc.exists) {
-        setActivity(doc.data());
+        const activityData = doc.data();
+        activityData.questions = activityData.questions.map(question => ({
+          ...question,
+          correctAnswer: Number(question.correctAnswer)
+        }));
+        setActivity(activityData);
       } else {
         console.log('No such document!');
       }
@@ -115,7 +125,7 @@ function Activity() {
   return (
     <div className="content-container">
       <div className="header-box">
-        <div className="logo-title" onClick={() => navigate('/instructor')}>
+        <div className="logo-title" onClick={() => navigate('/home')}>
           <img src={logo} alt="Logo" className="logo" />
           <h1>Learnify</h1>
         </div>

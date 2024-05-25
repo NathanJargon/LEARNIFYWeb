@@ -136,7 +136,7 @@ function Home() {
       <h3>Your Courses</h3>
         <div className="container">
         <div className="course-grid">
-          {courses.filter(course => course.courseName.toLowerCase().includes(searchTerm.toLowerCase())).map((course) => (
+        {courses.filter(course => course.courseName && course.courseName.toLowerCase().includes(searchTerm.toLowerCase())).map((course) => (
             <div className="course-card" key={course.id}>
               <div className="card" style={{ backgroundImage: `url(${html})` }}>
                 <div className="card-body">

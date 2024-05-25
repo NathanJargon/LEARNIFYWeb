@@ -14,7 +14,7 @@ function CreateActivity() {
   const [activityNumber, setActivityNumber] = useState('');
   const [activityDescription, setActivityDescription] = useState('');
   const [numberOfItems, setNumberOfItems] = useState('');
-  const [questions, setQuestions] = useState([{ question: '', choices: ['', '', '', ''], correctAnswer: '' }]);
+  const [questions, setQuestions] = useState([{ question: '', choices: ['', '', '', ''], correctAnswer: '1' }]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 
   const navigate = useNavigate();
@@ -61,7 +61,7 @@ function CreateActivity() {
 
   const handleCorrectAnswerChange = (event) => {
     const newQuestions = [...questions];
-    newQuestions[currentQuestionIndex].correctAnswer = event.target.value;
+    newQuestions[currentQuestionIndex].correctAnswer = event.target.value - 1;
     setQuestions(newQuestions);
   };
 

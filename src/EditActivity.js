@@ -169,11 +169,11 @@ function EditActivity() {
         ))}
 
         <div className="create-activity-button-container">
-          <button type="button" onClick={handlePrevious}>
+          <button type="button" className="cancel-button" onClick={handlePrevious}>
             {currentQuestionIndex > 0 ? 'Previous' : 'Cancel'}
           </button>
             {currentQuestionIndex < numberOfItems - 1 ? (
-              <button type="button" onClick={handleNext}>Next</button>
+              <button type="button" className="next-button" onClick={handleNext}>Next</button>
             ) : (
               <input type="submit" value="Submit" className="submit-button" />
             )}

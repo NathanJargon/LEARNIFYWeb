@@ -59,11 +59,17 @@ function CourseContent() {
         // Fetch the user's scores
         const userScores = {};
         for (const activity of activitiesData) {
-          const userResult = activity.ActivityResult.find(result => result.userEmail === currentUser.email);
-          if (userResult) {
-            userScores[activity.id] = userResult.score;
+          if (currentUser) {
+            const userResult = activity.ActivityResult.find(result => result.userEmail === currentUser.email);
+            if (userResult) {
+              userScores[activity.id] = {
+                score: userResult.score,
+                totalItems: activity.numberOfItems
+              };
+            }
           }
         }
+  
 
         console.log('User Scores:', JSON.stringify(userScores, null, 2));
 
@@ -188,7 +194,9 @@ function CourseContent() {
                   {`Activity ${index + 1}`}
                 </h5>
                 {userScores[activity.id] !== undefined && 
-                  <h3>{`Score: ${userScores[activity.id]}/10`}</h3>
+                  <div className="score-container">
+                    <h3>{`Score: ${userScores[activity.id].score}/${userScores[activity.id].totalItems}`}</h3>
+                  </div>
                 }
               </div>
             </div>

@@ -29,16 +29,18 @@ function Home() {
   
     // upload the course image to Firebase Storage
     const storageRef = firebase.storage().ref();
-    const fileRef = storageRef.child(courseImage.name);
-    await fileRef.put(courseImage);
-    const fileUrl = await fileRef.getDownloadURL();
+    let fileUrl = '';
+    if (courseImage) {
+      const fileRef = storageRef.child(courseImage.name);
+      await fileRef.put(courseImage);
+      fileUrl = await fileRef.getDownloadURL();
   
-    // upload the learning materials to Firebase Storage
-    const learningMaterialUrls = await Promise.all(learningMaterials.map(async (file) => {
-      const fileRef = storageRef.child(file.name);
-      await fileRef.put(file);
-      return fileRef.getDownloadURL();
-    }));
+      // upload the learning materials to Firebase Storage
+      const learningMaterialUrls = await Promise.all(learningMaterials.map(async (file) => {
+        const fileRef = storageRef.child(file.name);
+        await fileRef.put(file);
+        return fileRef.getDownloadURL();
+      }));
   
     await db.collection('courses').doc(docId).set({
       courseName,
@@ -52,6 +54,9 @@ function Home() {
     });
   
     navigate('/instructor');
+    } else {
+      alert("Please select a course image before submitting.");
+    }
   };
 
   const handleImageChange = (e) => {
