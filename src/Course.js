@@ -132,12 +132,14 @@ function CourseContent() {
       const userScores = {};
       for (const activity of activitiesData) {
         if (currentUser) {
-          const userResult = activity.ActivityResult.find(result => result.userEmail === currentUser.email);
-          if (userResult) {
-            userScores[activity.id] = {
-              score: userResult.score,
-              totalItems: activity.numberOfItems
-            };
+          if (activity.ActivityResult) {
+            const userResult = activity.ActivityResult.find(result => result.userEmail === currentUser.email);
+            if (userResult) {
+              userScores[activity.id] = {
+                score: userResult.score,
+                totalItems: activity.numberOfItems
+              };
+            }
           }
         }
       }

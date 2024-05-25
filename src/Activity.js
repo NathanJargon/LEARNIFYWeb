@@ -64,6 +64,7 @@ function Activity() {
         userId: user.uid,
         score: score,
         courseId: courseId,
+        activityId: activityId,
         };
     } else {
         // If no result for the current user exists, add the new result
@@ -72,6 +73,7 @@ function Activity() {
         userId: user.uid,
         score: score,
         courseId: courseId,
+        activityId: activityId,
         });
     }
 

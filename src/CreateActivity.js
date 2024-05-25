@@ -21,13 +21,26 @@ function CreateActivity() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-  
+
+    const numItems = parseInt(numberOfItems);
+    if (!Number.isInteger(numItems) || numItems <= 0) {
+      alert('Number of items must be a positive integer.');
+      return;
+    }
+
     const user = firebase.auth().currentUser;
     const db = firebase.firestore();
 
     if (user) {
       const docId = `${activityName.replace(/\s/g, '')}-${user.uid}`; 
-    
+
+      // Check if a document with the same docId already exists
+      const docSnapshot = await db.collection('activities').doc(docId).get();
+      if (docSnapshot.exists) {
+        alert('An activity with the same name already exists.');
+        return;
+      }
+
       await db.collection('activities').doc(docId).set({
         id: docId,
         activityName,
@@ -38,8 +51,9 @@ function CreateActivity() {
         userEmail: user.email,
         userId: docId,
         courseId: courseId,
+        ActivityResult: [], 
       });
-    
+
       navigate('/instructor');
     } else {
       // Handle the case where no user is signed in.
@@ -61,8 +75,9 @@ function CreateActivity() {
 
   const handleCorrectAnswerChange = (event) => {
     const newQuestions = [...questions];
-    newQuestions[currentQuestionIndex].correctAnswer = event.target.value - 1;
+    newQuestions[currentQuestionIndex].correctAnswer = String(event.target.value - 1);
     setQuestions(newQuestions);
+    console.log(`Question ${currentQuestionIndex + 1} correct answer: ${newQuestions[currentQuestionIndex].correctAnswer}`);
   };
 
   const handleNext = () => {
@@ -85,7 +100,7 @@ function CreateActivity() {
       if (numItems > questions.length) {
         setQuestions(oldQuestions => [
           ...oldQuestions,
-          ...new Array(numItems - oldQuestions.length).fill({ question: '', choices: ['', '', '', ''], correctAnswer: '' })
+          ...new Array(numItems - oldQuestions.length).fill({ question: '', choices: ['', '', '', ''], correctAnswer: '0' })
         ]);
       }
     }
@@ -138,7 +153,7 @@ function CreateActivity() {
 
             <label>
               Correct Answer:
-              <select value={question.correctAnswer} onChange={e => handleCorrectAnswerChange(e)}>
+              <select value={question.correctAnswer + 1} onChange={e => handleCorrectAnswerChange(e)}>
                 {question.choices.map((choice, index) => (
                   <option key={index} value={index + 1}>
                     Choice {index + 1}

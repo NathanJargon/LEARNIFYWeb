@@ -31,50 +31,52 @@ function Home() {
     const fetchActivityResult = async () => {
       const db = firebase.firestore();
       const user = firebase.auth().currentUser;
-  
+
       if (!user) {
         return;
       }
-  
-      const snapshot = await db.collection('activities').get();
-      const activityResults = snapshot.docs.flatMap(doc => doc.data().ActivityResult);
-  
-      // Log the activityResults to the console
-      console.log('Activity results:', activityResults);
-  
-      const courseActivityResults = courses.reduce((acc, course) => {
-        acc[course.id] = activityResults.filter(ar => ar && ar.userEmail === user.email && ar.courseId === course.id);
-        return acc;
-      }, {});
-  
-      // Log the courseActivityResults to the console
-      console.log('Course activity results:', courseActivityResults);
-  
-      const promises = Object.entries(courseActivityResults).map(async ([courseId, activityResults]) => {
-        const completedActivities = activityResults.filter(ar => ar.score !== undefined).length;
-        const totalActivities = activityResults.length;
-  
-        // Log the completedActivities and totalActivities to the console
-        console.log(`Completed activities for course ${courseId}:`, completedActivities);
-        console.log(`Total activities for course ${courseId}:`, totalActivities);
-  
+      
+      const promises = courses.map(async (course) => {
+        const snapshotActivities = await db.collection('activities')
+          .where('courseId', '==', course.id)
+          .get();
+
+        const activities = snapshotActivities.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+        const totalActivities = activities.length;
+
+        const completedActivities = activities.reduce((count, activity) => {
+          const isCompleted = activity.ActivityResult && activity.ActivityResult.some(result => result.userEmail === user.email);
+          return isCompleted ? count + 1 : count;
+        }, 0);
+
+        console.log(`Total and completed activities for course ${course.id}:`, totalActivities, completedActivities);
+
         return {
-          courseId,
-          progress: (completedActivities / totalActivities) * 100
+          courseId: course.id,
+          totalActivities,
+          completedActivities,
+          activityIds: activities.map(activity => activity.id) // Extract the document IDs
         };
       });
-  
+
       const results = await Promise.all(promises);
-  
-      const newProgress = results.reduce((acc, { courseId, progress }) => {
-        acc[courseId] = progress;
+
+      const newActivityResults = results.reduce((acc, { courseId, totalActivities, completedActivities }) => {
+        const progressPercentage = totalActivities > 0 ? (completedActivities / totalActivities) * 100 : 0;
+        acc[courseId] = {
+          totalActivities,
+          completedActivities,
+          progressPercentage
+        };
         return acc;
       }, {});
   
-      setProgress(newProgress);
+      console.log(`Total and completed activities and progress percentages for all courses:`, newActivityResults);
+      setProgress(newActivityResults); // Update the progress state
     };
-  
-    if (courses.length > 0 && firebase.auth().currentUser) {
+
+    if (courses.length > 0) {
       fetchActivityResult();
     }
   }, [courses, firebase.auth().currentUser]);
@@ -114,18 +116,18 @@ function Home() {
       <h3>Courses</h3>
         <div className="container">
           <div className="course-grid">
-            {courses.filter(course => course.courseName && course.courseName.toLowerCase().includes(searchTerm.toLowerCase())).map((course) => (
+          {courses.filter(course => course.courseName && course.courseName.toLowerCase().includes(searchTerm.toLowerCase())).map((course) => (
             <div className="course-card" key={course.id}>
               <div className="card" style={{ backgroundImage: `url(${html})` }}>
                 <div className="card-body">
-                  <h2>{course.userEmail}</h2>
+                  <h2>{firebase.auth().currentUser.email}</h2>
                   <h5 className="card-title">{course.courseName}</h5>
                   <div className="d-flex justify-content-between align-items-center">
                     <div className="progress">
-                      <div className="progress-bar" role="progressbar" style={{ width: `${progress[course.id] || 0}%` }} aria-valuenow={progress[course.id] || 0} aria-valuemin="0" aria-valuemax="100"></div>
-                      <span className="progress-percentage">Progress: {Math.round(progress[course.id] || 0)}%</span>
+                      <div className="progress-bar" role="progressbar" style={{ width: `${progress[course.id]?.progressPercentage || 0}%` }} aria-valuenow={progress[course.id]?.progressPercentage || 0} aria-valuemin="0" aria-valuemax="100"></div>
+                      <span className="progress-percentage">Progress: {Math.round(progress[course.id]?.progressPercentage || 0)}%</span>
                     </div>
-                    <button className="btn btn-primary" onClick={() => navigate(`/usercourse/${course.id}`)}>View Course</button>
+                    <button className="btn btn-primary" onClick={() => navigate(`/course/${course.id}`)}>View Course</button>
                   </div>
                 </div>
               </div>
